@@ -1,0 +1,6 @@
+<p *ngIf="!recipes.length" #dada>Ładowanie</p>
+<div *ngFor="let recipe of recipes">
+  <p>{{ recipe.name | uppercaseFirstLetter}} </p>
+  <p  >Ocena: {{  recipe.rating}}</p>
+</div>
+
