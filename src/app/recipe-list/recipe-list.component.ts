@@ -1,6 +1,16 @@
-import { AfterViewInit, Component, ElementRef, EventEmitter, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  ElementRef,
+  EventEmitter,
+  OnDestroy,
+  OnInit,
+  Output,
+  ViewChild,
+} from '@angular/core';
+import { RecipeApiService } from '../recipe-api.service';
 
-interface Recipe {
+export interface Recipe {
   name: string;
   id: number;
   description: string[];
@@ -21,26 +31,24 @@ interface Person {
   selector: 'app-recipe-list',
   templateUrl: './recipe-list.component.html',
   styleUrls: ['./recipe-list.component.scss'],
+  providers: [RecipeApiService],
 })
-export class RecipeListComponent implements OnDestroy, OnInit, AfterViewInit {
+export class RecipeListComponent
+  implements OnDestroy, OnInit, AfterViewInit
+{
   @Output() public inputHasChange = new EventEmitter<number>();
 
   public recipes: Recipe[] = [];
 
-  @ViewChild('dada') public ratingParagraphElement!: ElementRef<HTMLParagraphElement>;
+  @ViewChild('dada')
+  public ratingParagraphElement!: ElementRef<HTMLParagraphElement>;
+
+  constructor(private recipeApiService: RecipeApiService) {}
 
   ngOnInit() {
-    setTimeout(() => {
-      this.inputHasChange.emit(213);
-    }, 2000);
-
-    console.log(this.ratingParagraphElement);
-
-    fetch('http://localhost:3000/recipes')
-      .then((res) => res.json())
-      .then((recipes: Recipe[]) => {
-        this.recipes = recipes;
-      });
+    this.recipeApiService.getRecipes().subscribe((result) => {
+      this.recipes = result;
+    });
   }
 
   ngAfterViewInit() {
@@ -53,10 +61,5 @@ export class RecipeListComponent implements OnDestroy, OnInit, AfterViewInit {
 
   public check(e: any) {
     console.log(e);
-  }
-
-  public uppercaseFirstLetter(str: string) {
-    console.log(str);
-    return str.charAt(0).toUpperCase() + str.substring(1);
   }
 }
