@@ -1,25 +1,17 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { render } from '@testing-library/angular';
+import { RecipeListComponent } from '../recipe-list/recipe-list.component';
 import { MainComponent } from './main.component';
-
+import { MockComponent } from 'ng-mocks';
 describe('MainComponent', () => {
-  let component: MainComponent;
-  let fixture: ComponentFixture<MainComponent>;
+  test('app-recipe-list is visible', async () => {
+    const result = await render(MainComponent, {
+      imports: [HttpClientTestingModule],
+      declarations: [MockComponent(RecipeListComponent)],
+    });
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      declarations: [ MainComponent ]
-    })
-    .compileComponents();
-  });
-
-  beforeEach(() => {
-    fixture = TestBed.createComponent(MainComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
-
-  it('should create', () => {
-    expect(component).toBeTruthy();
+    expect(
+      result.container.querySelector('app-recipe-list')
+    ).not.toBeNull();
   });
 });

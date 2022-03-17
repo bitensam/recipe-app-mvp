@@ -10,4 +10,27 @@
 html,
 body {
   height: 100%;
+  background-color: var(--background);
+}
+
+$input-border-width: 3px;
+
+:root {
+  --primary: #2f6690;
+  --primary-variant: #3a7ca5;
+  --secondary: #16425b;
+  --secondary-variant: #81c3d7;
+  --background: #d9dcd6;
+}
+
+input,
+select {
+  border: $input-border-width solid transparent;
+  outline: none;
+}
+
+input:focus,
+select:focus {
+  border: $input-border-width solid var(--primary-variant);
+  transition: border 0.6s linear;
 }
