@@ -1,2 +1,5 @@
-<p> {{ recipe.name | uppercaseFirstLetter }}</p>
+<a (click)="select()">
+  <p> {{ recipe.name | uppercaseFirstLetter }}</p>
 <span>{{  recipe.rating | rating }}</span>
+</a>
+
