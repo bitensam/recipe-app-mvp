@@ -7,8 +7,9 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
+import { RecipeFormService } from './recipe-form.service';
 
-interface MyFormValue {
+export interface MyFormValue {
   name: string;
   isAdult: boolean;
 }
@@ -48,7 +49,10 @@ export class RecipeFormComponent implements OnInit {
     return this.moviesFormArray.controls as FormGroup[];
   }
 
-  constructor(private formBuild: FormBuilder) {}
+  constructor(
+    private formBuild: FormBuilder,
+    private recipeFormService: RecipeFormService
+  ) {}
 
   ngOnInit(): void {
     // console.log(this.name);
@@ -57,7 +61,7 @@ export class RecipeFormComponent implements OnInit {
 
     // console.log(this.name);
 
-    this.form = this.createForm();
+    this.form = this.recipeFormService.createForm();
   }
 
   goForward() {
@@ -86,40 +90,5 @@ export class RecipeFormComponent implements OnInit {
         rating: this.formBuild.control(''),
       })
     );
-  }
-
-  private createForm() {
-    const form = this.formBuild.group({
-      name: this.formBuild.control('', [Validators.required]),
-      isAdult: this.formBuild.control(false),
-      idNumber: this.formBuild.control(''),
-      movies: this.formBuild.array([new FormControl()]),
-      moviesWithRatings: this.formBuild.array([
-        this.formBuild.group({
-          movieName: this.formBuild.control(''),
-          rating: this.formBuild.control(''),
-        }),
-      ]),
-    });
-
-    form.controls['movies'] as FormArray;
-
-    form.valueChanges.subscribe((formValue: MyFormValue) => {});
-
-    form.controls['isAdult'].valueChanges.subscribe(
-      (checked: boolean) => {
-        const idNumberControl = form.controls['idNumber'];
-
-        if (checked) {
-          idNumberControl.addValidators([Validators.required]);
-        } else {
-          idNumberControl.clearValidators();
-        }
-
-        idNumberControl.updateValueAndValidity();
-      }
-    );
-
-    return form;
   }
 }
