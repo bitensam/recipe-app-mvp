@@ -9,7 +9,6 @@ export class RecipeApiService {
   constructor(private http: HttpClient) {}
 
   public getRecipes() {
-    console.log('elo');
     return this.http.get<Recipe[]>('http://localhost:3000/recipes');
   }
 }
