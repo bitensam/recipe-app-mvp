@@ -1,14 +1,6 @@
-import {
-  AfterViewInit,
-  Component,
-  ElementRef,
-  EventEmitter,
-  OnDestroy,
-  OnInit,
-  Output,
-  ViewChild,
-} from '@angular/core';
-import { RecipeApiService } from '../recipe-api.service';
+import { Component } from '@angular/core';
+import { RecipeApiService } from './recipe-api.service';
+import { RecipeListService } from './recipe-list.service';
 
 export interface Recipe {
   name: string;
@@ -23,43 +15,25 @@ interface Ingriedient {
   value: string;
 }
 
-interface Person {
-  name: string;
-}
-
 @Component({
   selector: 'app-recipe-list',
   templateUrl: './recipe-list.component.html',
   styleUrls: ['./recipe-list.component.scss'],
-  providers: [RecipeApiService],
 })
-export class RecipeListComponent
-  implements OnDestroy, OnInit, AfterViewInit
-{
-  @Output() public inputHasChange = new EventEmitter<number>();
-
+export class RecipeListComponent {
   public recipes: Recipe[] = [];
+  public sortOptions =
+    this.recipeListService.getRecipeListSortOptions();
 
-  @ViewChild('dada')
-  public ratingParagraphElement!: ElementRef<HTMLParagraphElement>;
-
-  constructor(private recipeApiService: RecipeApiService) {}
+  constructor(
+    private recipeApiService: RecipeApiService,
+    private recipeListService: RecipeListService
+  ) {}
 
   ngOnInit() {
     this.recipeApiService.getRecipes().subscribe((result) => {
-      this.recipes = result;
+      console.log('ole');
+      this.recipes = [...result, ...result, ...result];
     });
-  }
-
-  ngAfterViewInit() {
-    console.log(this.ratingParagraphElement);
-  }
-
-  ngOnDestroy() {
-    console.log('boom');
-  }
-
-  public check(e: any) {
-    console.log(e);
   }
 }
