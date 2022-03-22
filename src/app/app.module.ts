@@ -9,10 +9,12 @@ import { RatingPipe } from './recipe-tile/rating.pipe';
 import { RecipeTileComponent } from './recipe-tile/recipe-tile.component';
 import { RecipeListComponent } from './recipe-list/recipe-list.component';
 import { RecipeDetailsComponent } from './recipe-details/recipe-details.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { RecipeFormComponent } from './recipe-form/recipe-form.component';
 
 @NgModule({
-  declarations: [AppComponent, RecipeListComponent, UppercaseFirstLetterPipe, MainComponent, RecipeTileComponent, RatingPipe, RecipeDetailsComponent],
-  imports: [BrowserModule, HttpClientModule],
+  declarations: [AppComponent, RecipeListComponent, UppercaseFirstLetterPipe, MainComponent, RecipeTileComponent, RatingPipe, RecipeDetailsComponent, RecipeFormComponent],
+  imports: [BrowserModule, HttpClientModule, ReactiveFormsModule],
   providers: [],
   bootstrap: [AppComponent],
 })

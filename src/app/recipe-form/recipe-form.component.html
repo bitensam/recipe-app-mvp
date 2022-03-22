@@ -1,0 +1,64 @@
+<form [formGroup]="form" (ngSubmit)="goForward()">
+  <label>
+    <input formControlName="name" placeholder="Name" />
+    <p *ngIf="form.controls['name'].touched && form.controls['name'].errors">
+      Pole obowiązkowe
+    </p>
+  </label>
+  <label>
+    Adult?
+    <input formControlName="isAdult" type="checkbox" />
+  </label>
+
+  <label *ngIf="form.controls['isAdult'].value">
+    <input formControlName="idNumber" placeholder="Id" />
+  </label>
+
+  <br />
+  <br />
+  <button type="button" (click)="addMovieWithRating()">
+    Dodaj film z oceną
+  </button>
+  <div formArrayName="moviesWithRatings">
+    <div *ngFor="let movie of moviesWithRatingControls; let index = index">
+      <div [formGroup]="movie">
+        <label>
+          <input formControlName="movieName" placeholder="Movie name" />
+        </label>
+
+        <label>
+          Ocena:
+          <select formControlName="rating">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+          </select>
+        </label>
+        <button
+          (click)="removeItemFromArray(moviesWithRatingsFormArray, index)"
+        >
+          usuń
+        </button>
+      </div>
+    </div>
+  </div>
+  <br />
+  <button type="button" (click)="addMovie()">Dodaj film</button>
+  <div formArrayName="movies">
+    <div *ngFor="let movie of moviesControls; let index = index">
+      <label>
+        <input placeholder="Movie" [formControlName]="index" />
+      </label>
+      <button (click)="removeItemFromArray(moviesFormArray, index)">
+        usuń
+      </button>
+    </div>
+  </div>
+
+  <br />
+  <br />
+  <button type="submit">Dalej</button>
+</form>
+
+<br />
+{{ form.value | json }}

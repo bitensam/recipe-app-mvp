@@ -22,17 +22,12 @@ interface Ingriedient {
 })
 export class RecipeListComponent {
   public recipes: Recipe[] = [];
-  public sortOptions =
-    this.recipeListService.getRecipeListSortOptions();
+  public sortOptions = this.recipeListService.getRecipeListSortOptions();
 
-  constructor(
-    private recipeApiService: RecipeApiService,
-    private recipeListService: RecipeListService
-  ) {}
+  constructor(private recipeApiService: RecipeApiService, private recipeListService: RecipeListService) {}
 
   ngOnInit() {
     this.recipeApiService.getRecipes().subscribe((result) => {
-      console.log('ole');
       this.recipes = [...result, ...result, ...result];
     });
   }

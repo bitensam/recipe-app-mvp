@@ -1,0 +1,25 @@
+<input [formControl]="recipeNameControl" placeholder="Nazwa przepisu" />
+
+<div
+  *ngIf="recipeNameControl.touched && recipeNameControl.errors?.['minlength']"
+>
+  Za krótka nazwa
+</div>
+
+<div
+  *ngIf="recipeNameControl.touched && recipeNameControl.errors?.['required']"
+>
+  Pole obowiązkowe
+</div>
+
+<div>
+  {{ recipeNameControl.errors | json }}
+</div>
+
+{{ recipeNameControl.value }}
+<br />
+touched/untouched: {{ recipeNameControl.touched }}
+{{ recipeNameControl.untouched }}
+<br />
+pristine/dirty: {{ recipeNameControl.pristine }}
+{{ recipeNameControl.dirty }}
