@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { FormControl } from '@angular/forms';
 import { RecipeApiService } from './recipe-api.service';
 import { RecipeListService } from './recipe-list.service';
 
@@ -22,6 +23,7 @@ interface Ingriedient {
 })
 export class RecipeListComponent {
   public recipes: Recipe[] = [];
+  searchText = new FormControl('');
   public sortOptions = this.recipeListService.getRecipeListSortOptions();
 
   constructor(private recipeApiService: RecipeApiService, private recipeListService: RecipeListService) {}

@@ -11,10 +11,28 @@ import { RecipeListComponent } from './recipe-list/recipe-list.component';
 import { RecipeDetailsComponent } from './recipe-details/recipe-details.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RecipeFormComponent } from './recipe-form/recipe-form.component';
+import { HeaderComponent } from './header/header.component';
+import { LoginComponent } from './login/login.component';
+import { RoutingModule } from './routing/routing.module';
+import { CockpitComponent } from './cockpit/cockpit.component';
+import { SearchPipe } from './recipe-list/search.pipe';
 
 @NgModule({
-  declarations: [AppComponent, RecipeListComponent, UppercaseFirstLetterPipe, MainComponent, RecipeTileComponent, RatingPipe, RecipeDetailsComponent, RecipeFormComponent],
-  imports: [BrowserModule, HttpClientModule, ReactiveFormsModule],
+  declarations: [
+    AppComponent,
+    RecipeListComponent,
+    UppercaseFirstLetterPipe,
+    MainComponent,
+    RecipeTileComponent,
+    RatingPipe,
+    RecipeDetailsComponent,
+    RecipeFormComponent,
+    HeaderComponent,
+    LoginComponent,
+    CockpitComponent,
+    SearchPipe,
+  ],
+  imports: [BrowserModule, HttpClientModule, ReactiveFormsModule, RoutingModule],
   providers: [],
   bootstrap: [AppComponent],
 })

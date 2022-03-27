@@ -1,13 +1,16 @@
 <header>
-  <input placeholder="Szukaj...">
+  <input placeholder="Szukaj..." [formControl]="searchText" />
   <select>
-    <option *ngFor="let option of sortOptions" [value]="option.value">{{ option.label }}</option>
+    <option *ngFor="let option of sortOptions" [value]="option.value">
+      {{ option.label }}
+    </option>
   </select>
 </header>
 
 <div>
-  <app-recipe-tile *ngFor="let recipe of recipes" [recipe]="recipe">
+  <app-recipe-tile
+    *ngFor="let recipe of recipes | appSearch: searchText.value"
+    [recipe]="recipe"
+  >
   </app-recipe-tile>
 </div>
-
-

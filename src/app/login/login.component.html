@@ -1,0 +1,38 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-6">
+      <div class="login card">
+        <div class="login-header">
+          <h2>Cześć,</h2>
+          <h6>zaloguj się do Przepiśnika</h6>
+        </div>
+        <form [formGroup]="loginForm" (ngSubmit)="login()">
+          <div class="mb-3">
+            <label for="email" class="form-label">Email:</label>
+            <input
+              formControlName="email"
+              type="email"
+              class="form-control"
+              id="email"
+              placeholder="ex: user@mailbox.com"
+            />
+          </div>
+          <div class="mb-3">
+            <label for="password" class="form-label">Hasło</label>
+            <input
+              formControlName="password"
+              type="password"
+              class="form-control"
+              id="password"
+            />
+          </div>
+          <div class="mb-3 row">
+            <div class="col-6">Nie pamiętasz hasła?</div>
+            <div class="col-6">Zarejestruj się</div>
+          </div>
+          <button type="submit" class="btn btn-primary">Zaloguj</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
