@@ -24,9 +24,15 @@ $input-border-width: 3px;
 }
 
 input,
+textarea,
 select {
   border: $input-border-width solid transparent;
+  border-radius: 0.25rem;
   outline: none;
+}
+
+button {
+  border-radius: 0.25rem;
 }
 
 input:focus,

@@ -35,7 +35,7 @@ export class LoginComponent implements OnInit {
       if (loggedUser) {
         alert('Sukces');
         this.loginForm.reset();
-        this.router.navigate(['dashboard']);
+        this.router.navigate(['dashboard', 'recipe-add']);
       } else {
         alert('Błędne dane logowania');
       }

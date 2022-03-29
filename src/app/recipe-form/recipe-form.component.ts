@@ -1,17 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import {
-  AbstractControl,
-  FormArray,
-  FormBuilder,
-  FormControl,
-  FormGroup,
-  Validators,
-} from '@angular/forms';
+import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { RecipeFormService } from './recipe-form.service';
 
 export interface MyFormValue {
-  name: string;
-  isAdult: boolean;
+  title: string;
+  description: string;
 }
 
 @Component({
@@ -20,75 +13,53 @@ export interface MyFormValue {
   styleUrls: ['./recipe-form.component.scss'],
 })
 export class RecipeFormComponent implements OnInit {
-  form!: FormGroup;
+  formAddRecipe!: FormGroup;
 
-  private _name = 'kamil';
-
-  get name(): string {
-    console.log('getValue from this.name');
-    return this._name;
-  }
-
-  set name(value: string) {
-    console.error('ziomek nie nadpiszesz!');
-  }
-
-  get moviesWithRatingsFormArray() {
-    return this.form.controls['moviesWithRatings'] as FormArray;
-  }
-
-  get moviesWithRatingControls() {
-    return this.moviesWithRatingsFormArray.controls as FormGroup[];
-  }
-
-  get moviesFormArray() {
-    return this.form.controls['movies'] as FormArray;
-  }
-
-  get moviesControls() {
-    return this.moviesFormArray.controls as FormGroup[];
-  }
-
-  constructor(
-    private formBuild: FormBuilder,
-    private recipeFormService: RecipeFormService
-  ) {}
+  constructor(private formBuild: FormBuilder, private recipeFormService: RecipeFormService) {}
 
   ngOnInit(): void {
-    // console.log(this.name);
-
-    // this.name = 'Artur';
-
-    // console.log(this.name);
-
-    this.form = this.recipeFormService.createForm();
+    this.formAddRecipe = this.recipeFormService.createForm();
+  }
+  get ingredients() {
+    return this.formAddRecipe.controls['ingredients'] as FormArray;
+  }
+  get ingredientsControl() {
+    return this.ingredients.controls as FormGroup[];
+  }
+  addIngredient() {
+    this.ingredients.push(
+      new FormGroup({
+        ingredientName: this.formBuild.control('', [Validators.required]),
+        ingredientAmount: this.formBuild.control('', [Validators.required]),
+      })
+    );
   }
 
   goForward() {
-    this.form.markAllAsTouched();
+    this.formAddRecipe.markAllAsTouched();
 
-    if (this.form.invalid) {
+    if (this.formAddRecipe.invalid) {
       alert('bład w formularzu');
       return;
     }
 
-    console.log(this.form.value, this.form.valid);
+    console.log(this.formAddRecipe.value, this.formAddRecipe.valid);
   }
 
-  public addMovie() {
-    this.moviesFormArray.push(new FormControl(''));
-  }
+  // public addMovie() {
+  //   this.moviesFormArray.push(new FormControl(''));
+  // }
 
-  public removeItemFromArray(array: FormArray, index: number) {
-    array.removeAt(index);
-  }
+  // public removeItemFromArray(array: FormArray, index: number) {
+  //   array.removeAt(index);
+  // }
 
-  public addMovieWithRating() {
-    this.moviesWithRatingsFormArray.push(
-      new FormGroup({
-        movieName: this.formBuild.control(''),
-        rating: this.formBuild.control(''),
-      })
-    );
-  }
+  // public addMovieWithRating() {
+  //   this.moviesWithRatingsFormArray.push(
+  //     new FormGroup({
+  //       movieName: this.formBuild.control(''),
+  //       rating: this.formBuild.control(''),
+  //     })
+  //   );
+  // }
 }
