@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { AuthService } from './auth.service';
-import { Role } from './role.enum';
+import { Role } from '../enums/role.enum';
 
 @Injectable({
   providedIn: 'root',

@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Recipe } from './recipe-list.component';
+import { Recipe } from '../../recipe-list/recipe-list.component';
 
 @Injectable({
   providedIn: 'root',
@@ -17,7 +17,15 @@ export class RecipeApiService {
   }
 
   public postRecipes(recipe: Recipe) {
-    return this.http.post<Recipe>('http://localhost:3000/recipes', recipe);
+    const descriptionArray = recipe.description.split('.');
+
+    return this.http.post<Recipe>('http://localhost:3000/recipes', {
+      name: recipe.name,
+      description: descriptionArray,
+      ingriedients: recipe.ingriedients,
+      rating: recipe.rating,
+      authorId: recipe.authorId,
+    });
   }
   public sortRecipes(selectValue: string) {
     const splitedSelectOption = selectValue.split(',');
