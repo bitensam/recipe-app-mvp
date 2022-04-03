@@ -1,10 +1,22 @@
-import { Component, OnInit } from '@angular/core';
-import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { User } from '../login/login.component';
+import { RecipeApiService } from '../recipe-list/recipe-api.service';
+import { UserService } from '../user.service';
 import { RecipeFormService } from './recipe-form.service';
 
-export interface MyFormValue {
-  title: string;
+export interface RecipeFormValue {
+  name: string;
   description: string;
+  ingriedients: { name: string; value: string }[];
+}
+
+export interface RecipeJSON {
+  name: string;
+  description: string;
+  ingriedients: { name: string; value: string }[];
+  rating: number;
+  authorId: number;
 }
 
 @Component({
@@ -12,25 +24,32 @@ export interface MyFormValue {
   templateUrl: './recipe-form.component.html',
   styleUrls: ['./recipe-form.component.scss'],
 })
-export class RecipeFormComponent implements OnInit {
+export class RecipeFormComponent implements OnInit, OnDestroy {
   formAddRecipe!: FormGroup;
+  recipeJSON: RecipeJSON | null = null;
+  userId: number | null = null;
 
-  constructor(private formBuild: FormBuilder, private recipeFormService: RecipeFormService) {}
+  constructor(
+    private formBuild: FormBuilder,
+    private recipeFormService: RecipeFormService,
+    private recipeApiService: RecipeApiService,
+    private userService: UserService
+  ) {}
 
   ngOnInit(): void {
     this.formAddRecipe = this.recipeFormService.createForm();
   }
-  get ingredients() {
-    return this.formAddRecipe.controls['ingredients'] as FormArray;
+  get ingriedients() {
+    return this.formAddRecipe.controls['ingriedients'] as FormArray;
   }
-  get ingredientsControl() {
-    return this.ingredients.controls as FormGroup[];
+  get ingriedientsControl() {
+    return this.ingriedients.controls as FormGroup[];
   }
   addIngredient() {
-    this.ingredients.push(
+    this.ingriedients.push(
       new FormGroup({
-        ingredientName: this.formBuild.control('', [Validators.required]),
-        ingredientAmount: this.formBuild.control('', [Validators.required]),
+        name: this.formBuild.control('', [Validators.minLength(3)]),
+        value: this.formBuild.control('', [Validators.minLength(1)]),
       })
     );
   }
@@ -42,24 +61,12 @@ export class RecipeFormComponent implements OnInit {
       alert('bład w formularzu');
       return;
     }
-
-    console.log(this.formAddRecipe.value, this.formAddRecipe.valid);
+    this.userService.user$.subscribe((user) => {
+      this.userId = user!.id;
+    });
+    this.recipeJSON = { ...this.formAddRecipe.value, rating: 2, authorId: this.userId };
+    console.log(this.recipeJSON);
   }
 
-  // public addMovie() {
-  //   this.moviesFormArray.push(new FormControl(''));
-  // }
-
-  // public removeItemFromArray(array: FormArray, index: number) {
-  //   array.removeAt(index);
-  // }
-
-  // public addMovieWithRating() {
-  //   this.moviesWithRatingsFormArray.push(
-  //     new FormGroup({
-  //       movieName: this.formBuild.control(''),
-  //       rating: this.formBuild.control(''),
-  //     })
-  //   );
-  // }
+  ngOnDestroy() {}
 }

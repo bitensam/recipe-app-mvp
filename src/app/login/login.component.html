@@ -6,7 +6,11 @@
           <h2>Cześć,</h2>
           <h6>zaloguj się do Przepiśnika</h6>
         </div>
-        <form [formGroup]="loginForm" name="loginForm" (ngSubmit)="login()">
+        <form
+          [formGroup]="loginForm"
+          name="loginForm"
+          (ngSubmit)="login(loginForm.value.email, loginForm.value.password)"
+        >
           <div class="mb-3">
             <label for="email" class="form-label">Email:</label>
             <input

@@ -1,5 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, OnChanges, SimpleChanges } from '@angular/core';
 import { FormControl } from '@angular/forms';
+import { Role } from '../role.enum';
+import { SelectOption } from '../select-option.interface';
+import { UserService } from '../user.service';
 import { RecipeApiService } from './recipe-api.service';
 import { RecipeListService } from './recipe-list.service';
 
@@ -21,16 +24,40 @@ interface Ingriedient {
   templateUrl: './recipe-list.component.html',
   styleUrls: ['./recipe-list.component.scss'],
 })
-export class RecipeListComponent {
+export class RecipeListComponent implements OnInit {
   public recipes: Recipe[] = [];
+  public sortedRecipes: Recipe[] = [];
+  public filteredRecipes: Recipe[] = [];
+  userRole: Role | null = null;
+  userId: number | null = null;
+
   searchText = new FormControl('');
+  sortValue = new FormControl(null);
   public sortOptions = this.recipeListService.getRecipeListSortOptions();
 
-  constructor(private recipeApiService: RecipeApiService, private recipeListService: RecipeListService) {}
+  constructor(private recipeApiService: RecipeApiService, private recipeListService: RecipeListService, private userService: UserService) {}
 
   ngOnInit() {
-    this.recipeApiService.getRecipes().subscribe((result) => {
-      this.recipes = [...result, ...result, ...result];
+    this.userService.user$.subscribe((user) => {
+      this.userRole = user!.role;
+      this.userId = user!.id;
+    });
+
+    if (this.userRole === 'author') {
+      this.recipeApiService.getAuthorOnlyRecipes(this.userId!).subscribe((result) => {
+        this.recipes = [...result];
+      });
+    } else {
+      this.recipeApiService.getAllRecipes().subscribe((result) => {
+        this.recipes = [...result];
+      });
+    }
+  }
+
+  onChangeSortOption() {
+    console.log(this.sortValue.value);
+    this.recipeApiService.sortRecipes(this.sortValue.value).subscribe((result) => {
+      this.recipes = [...result];
     });
   }
 }

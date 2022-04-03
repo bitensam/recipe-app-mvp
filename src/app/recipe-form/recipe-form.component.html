@@ -1,9 +1,9 @@
 <form [formGroup]="formAddRecipe" name="formAddRecipe" (ngSubmit)="goForward()">
   <div>
-    <input formControlName="title" placeholder="Nazwa przepisu" />
+    <input formControlName="name" placeholder="Nazwa przepisu" />
     <!-- <p
       *ngIf="
-        formAddRecipe.controls['title'].touched &&
+        formAddRecipe.controls['name'].touched &&
         formAddRecipe.controls['errors'].errors
       "
     >
@@ -16,33 +16,34 @@
       placeholder="Jak przygotować ?"
     ></textarea>
   </div>
-  <div formArrayName="ingredients">
+  <div formArrayName="ingriedients">
     <div
-      *ngFor="let ingredient of ingredientsControl; let i = index"
-      [formGroup]="ingredient"
+      *ngFor="let ingriedient of ingriedientsControl; let i = index"
+      [formGroup]="ingriedient"
       class="row"
     >
       <div class="col-6">
         <input
-          id="ingredients-{{ i }}"
-          formControlName="ingredientName"
+          id="ingriedients-{{ i }}"
+          formControlName="name"
           placeholder="Składnik"
           type="text"
         />
       </div>
       <div class="col-6">
         <input
-          id="ingredients-{{ i }}"
-          formControlName="ingredientAmount"
+          id="ingriedients-{{ i }}"
+          formControlName="value"
           placeholder="Ile ?"
-          type="number"
+          type="string"
         />
       </div>
     </div>
     <div class="col-12">
       <button type="button" (click)="addIngredient()">Następny składnik</button>
     </div>
-    <button type="submit">Dodaj</button>
   </div>
+  <button type="submit">Dodaj</button>
 </form>
-{{ formAddRecipe.value | json }}
+
+<!-- {{ formAddRecipe.value | json }} -->

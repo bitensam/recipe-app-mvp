@@ -1,6 +1,6 @@
 <header>
   <input placeholder="Szukaj..." [formControl]="searchText" />
-  <select>
+  <select [formControl]="sortValue" (change)="onChangeSortOption()">
     <option *ngFor="let option of sortOptions" [value]="option.value">
       {{ option.label }}
     </option>
@@ -8,9 +8,6 @@
 </header>
 
 <div>
-  <app-recipe-tile
-    *ngFor="let recipe of recipes | appSearch: searchText.value"
-    [recipe]="recipe"
-  >
+  <app-recipe-tile *ngFor="let recipe of recipes" [recipe]="recipe">
   </app-recipe-tile>
 </div>

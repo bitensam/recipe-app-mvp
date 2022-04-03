@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, Validators } from '@angular/forms';
-import { MyFormValue } from './recipe-form.component';
+import { RecipeFormValue } from './recipe-form.component';
 
 @Injectable({
   providedIn: 'root',
@@ -10,19 +10,19 @@ export class RecipeFormService {
 
   public createForm() {
     const form = this.formBuild.group({
-      title: this.formBuild.control('', [Validators.required]),
+      name: this.formBuild.control('', [Validators.minLength(3)]),
       description: this.formBuild.control('', [Validators.minLength(20)]),
-      ingredients: this.formBuild.array([
+      ingriedients: this.formBuild.array([
         this.formBuild.group({
-          ingredientName: this.formBuild.control('', [Validators.required]),
-          ingredientAmount: this.formBuild.control('', [Validators.required]),
+          name: this.formBuild.control('', [Validators.minLength(3)]),
+          value: this.formBuild.control('', [Validators.minLength(1)]),
         }),
       ]),
     });
 
-    form.controls['ingredients'] as FormArray;
+    form.controls['ingriedients'] as FormArray;
 
-    form.valueChanges.subscribe((formValue: MyFormValue) => {});
+    form.valueChanges.subscribe((formValue: RecipeFormValue) => {});
 
     return form;
   }

@@ -1,13 +1,11 @@
 import { Injectable } from '@angular/core';
 import { SelectOption } from '../select-option.interface';
 
-type SortType = 'name,desc' | 'name,asc' | 'rate,desc' | 'rate,asc';
-
 @Injectable({
   providedIn: 'root',
 })
 export class RecipeListService {
-  getRecipeListSortOptions(): SelectOption<SortType | null>[] {
+  getRecipeListSortOptions(): SelectOption[] {
     return [
       {
         label: 'Szukaj',
@@ -23,11 +21,11 @@ export class RecipeListService {
       },
       {
         label: 'Ocena 0-5',
-        value: 'rate,asc',
+        value: 'rating,asc',
       },
       {
         label: 'Ocena 5-0',
-        value: 'rate,desc',
+        value: 'rating,desc',
       },
     ];
   }

@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
-import { LoginService } from './login.service';
+import { Observable } from 'rxjs';
+import { AuthService } from '../auth.service';
+import { Role } from '../role.enum';
+import { UsersApiService } from './usersAPI.service';
 
 export interface User {
   id: number;
@@ -19,7 +22,9 @@ export interface User {
 export class LoginComponent implements OnInit {
   public loginForm!: FormGroup;
 
-  constructor(private formBuild: FormBuilder, private loginService: LoginService, private router: Router) {}
+  loggedUser: User | null = null;
+
+  constructor(private formBuild: FormBuilder, private authService: AuthService, private usersApiService: UsersApiService, private router: Router) {}
 
   ngOnInit(): void {
     this.loginForm = this.formBuild.group({
@@ -27,17 +32,15 @@ export class LoginComponent implements OnInit {
       password: [''],
     });
   }
-  login() {
-    this.loginService.getUsers().subscribe((result) => {
-      const loggedUser = result.find((user) => {
-        return user.email === this.loginForm.value.email && user.password === this.loginForm.value.password;
-      });
-      if (loggedUser) {
-        alert('Sukces');
-        this.loginForm.reset();
-        this.router.navigate(['dashboard', 'recipe-add']);
-      } else {
-        alert('Błędne dane logowania');
+  login(email: string, password: string) {
+    this.usersApiService.login(email, password).subscribe((result) => {
+      if (result.length === 0) {
+        return alert('login failed');
+      }
+      this.loggedUser = result[0];
+      if (email === this.loggedUser.email && password === this.loggedUser.password) {
+        this.authService.login(this.loggedUser);
+        this.loggedUser.role === Role.Author ? this.router.navigate(['dashboard/recipe-add']) : this.router.navigate(['dashboard/recipe-details']);
       }
     });
   }

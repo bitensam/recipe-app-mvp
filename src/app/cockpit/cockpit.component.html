@@ -1,9 +1,20 @@
 <nav>
-  <a class="btn btn-link" routerLink="recipe-add" routerLinkActive="active"
-    >Dodaj przepis</a
-  >
-  <a class="btn btn-link" routerLink="recipe-details" routerLinkActive="active"
-    >Szczegóły</a
+  <ng-container *ngIf="user$ | async as user">
+    <a
+      *ngIf="user.role === 'author'"
+      class="btn btn-link"
+      routerLink="recipe-add"
+      routerLinkActive="active"
+      >Dodaj przepis</a
+    >
+  </ng-container>
+  <ng-container>
+    <a
+      class="btn btn-link"
+      routerLink="recipe-details"
+      routerLinkActive="active"
+      >Szczegóły</a
+    ></ng-container
   >
 </nav>
 

@@ -2,6 +2,14 @@ main {
   display: grid;
   grid-template-columns: 1fr;
 }
+header {
+  text-align: center;
+  padding: 1rem 1.5rem;
+  background-color: var(--primary);
+  color: var(--secondary-variant);
+  display: flex;
+  justify-content: space-between;
+}
 
 @media screen and (min-width: 768px) {
   main {
