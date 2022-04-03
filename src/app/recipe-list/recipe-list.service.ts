@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { SelectOption } from '../select-option.interface';
+import { SelectOption } from '../shared/interfaces/select-option.interface';
 
 @Injectable({
   providedIn: 'root',

@@ -1,18 +1,18 @@
 import { Component, OnInit, OnChanges, SimpleChanges } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { debounceTime, distinctUntilChanged, fromEvent } from 'rxjs';
-import { Role } from '../role.enum';
-import { SelectOption } from '../select-option.interface';
-import { UserService } from '../user.service';
-import { RecipeApiService } from './recipe-api.service';
+import { Role } from '../shared/enums/role.enum';
+import { UserService } from '../shared/services/user.service';
+import { RecipeApiService } from '../shared/services/recipe-api.service';
 import { RecipeListService } from './recipe-list.service';
 
 export interface Recipe {
   name: string;
   id: number;
-  description: string[];
+  description: string;
   rating: number;
-  ingredients: Ingriedient[];
+  ingriedients: Ingriedient[];
+  authorId: number;
 }
 
 interface Ingriedient {

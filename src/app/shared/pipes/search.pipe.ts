@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { Recipe } from './recipe-list.component';
+import { Recipe } from '../../recipe-list/recipe-list.component';
 
 @Pipe({
   name: 'appSearch',

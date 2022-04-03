@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate, RouterStateSnapshot, UrlTree } from '@angular/router';
 import { map, Observable, tap } from 'rxjs';
-import { Role } from './role.enum';
-import { UserService } from './user.service';
+import { Role } from '../enums/role.enum';
+import { UserService } from '../services/user.service';
 
 @Injectable({
   providedIn: 'root',

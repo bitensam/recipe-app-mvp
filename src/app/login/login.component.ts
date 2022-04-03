@@ -2,9 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
-import { AuthService } from '../auth.service';
-import { Role } from '../role.enum';
-import { UsersApiService } from './usersAPI.service';
+import { AuthService } from '../shared/services/auth.service';
+import { Role } from '../shared/enums/role.enum';
+import { UsersApiService } from '../shared/services/usersAPI.service';
 
 export interface User {
   id: number;
