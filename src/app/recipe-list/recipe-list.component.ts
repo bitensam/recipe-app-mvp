@@ -1,5 +1,6 @@
 import { Component, OnInit, OnChanges, SimpleChanges } from '@angular/core';
 import { FormControl } from '@angular/forms';
+import { debounceTime, distinctUntilChanged, fromEvent } from 'rxjs';
 import { Role } from '../role.enum';
 import { SelectOption } from '../select-option.interface';
 import { UserService } from '../user.service';
@@ -26,8 +27,6 @@ interface Ingriedient {
 })
 export class RecipeListComponent implements OnInit {
   public recipes: Recipe[] = [];
-  public sortedRecipes: Recipe[] = [];
-  public filteredRecipes: Recipe[] = [];
   userRole: Role | null = null;
   userId: number | null = null;
 
@@ -55,9 +54,17 @@ export class RecipeListComponent implements OnInit {
   }
 
   onChangeSortOption() {
-    console.log(this.sortValue.value);
     this.recipeApiService.sortRecipes(this.sortValue.value).subscribe((result) => {
       this.recipes = [...result];
     });
+  }
+
+  onSearch() {
+    this.recipeApiService
+      .filterRecipes(this.searchText.value)
+      .pipe(debounceTime(300), distinctUntilChanged())
+      .subscribe((result) => {
+        this.recipes = [...result];
+      });
   }
 }

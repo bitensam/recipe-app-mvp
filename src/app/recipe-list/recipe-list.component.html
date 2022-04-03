@@ -1,5 +1,9 @@
 <header>
-  <input placeholder="Szukaj..." [formControl]="searchText" />
+  <input
+    placeholder="Szukaj..."
+    [formControl]="searchText"
+    (keyup)="onSearch()"
+  />
   <select [formControl]="sortValue" (change)="onChangeSortOption()">
     <option *ngFor="let option of sortOptions" [value]="option.value">
       {{ option.label }}
