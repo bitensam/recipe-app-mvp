@@ -24,4 +24,7 @@ export class RecipeApiService {
 
     return this.http.get<Recipe[]>(`http://localhost:3000/recipes?_sort=${splitedSelectOption[0]}&_order=${splitedSelectOption[1]}`);
   }
+  public filterRecipes(enteredText: string) {
+    return this.http.get<Recipe[]>(`http://localhost:3000/recipes?name_like=${enteredText}`);
+  }
 }

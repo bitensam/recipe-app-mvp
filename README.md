@@ -1,6 +1,6 @@
 To do:
 
-Wtorek
+<!-- Wtorek
 1.Baza:
 
 - dodanie roli do uzytkownika +
@@ -12,8 +12,11 @@ Wtorek
 - powiązanie zalogowanego uzytkownika z routingiem +
 - powiązanie zalogowanego uzytkownika wyswietlana lista przepisu (zwykly widzisz wszystkie, autor tylko jego) +
 - zrobienie serwisu do trzymania danych o zalogowaniu +
+ 5.RecipeList:
+- wyszukiwarka po stronie backendu + ew. dodać debouncer
+- sortowanie po stronie backndu +
 
-  Czwartek/Piątek
+  Czwartek/Piątek -->
 
 3. Recipe Form
 
@@ -25,10 +28,6 @@ Wtorek
   4.RecipeDetails:
 - wyświetlanie klikniętego przepisu w widoku
 - generowanie routingu dla danego przepisu
-  Sobota/niedziela
-  5.RecipeList:
-- wyszukiwarka po stronie backendu
-- sortowanie po stronie backndu
 
 7. Refaktor
 8. Stylowanie
